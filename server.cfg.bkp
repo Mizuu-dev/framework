@@ -1,0 +1,28 @@
+endpoint_add_tcp "0.0.0.0:1024"
+endpoint_add_udp "0.0.0.0:1024"
+
+sv_hostname "Mizuu Framework"
+sets sv_projectName "Mizuu Framework"
+sets sv_projectDesc "https://mizuu.dev"
+sets tags "development"
+sets locale "root-AQ"
+
+sv_enforceGameBuild 3258
+sv_licenseKey "cfxk_1QyexUZgXV4DQ06kGAWNy_2XGlKr"
+sv_maxclients 10
+set steam_webApiKey "none"
+set resources_useSystemChat true
+
+## These resources will start by default.
+ensure mapmanager
+ensure chat
+ensure spawnmanager
+ensure sessionmanager
+ensure basic-gamemode
+ensure hardcap
+
+## Add system admins
+add_ace group.admin command allow # allow all commands
+add_ace group.admin command.quit deny # but don't allow quit
+add_principal identifier.fivem:15617005 group.admin #Lennox.rose
+add_principal identifier.discord:1306175435486400546 group.admin #Lennox.rose

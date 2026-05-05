@@ -1,0 +1,28 @@
+endpoint_add_tcp "0.0.0.0:yourportnumber"
+endpoint_add_udp "0.0.0.0:yourportnumber"
+
+sv_hostname "Mizuu Framework"
+sets sv_projectName "Mizuu Framework"
+sets sv_projectDesc "https://mizuu.dev"
+sets tags "development"
+sets locale "root-AQ"
+
+sv_enforceGameBuild 3258
+sv_licenseKey "your.cfx.license.key"
+sv_maxclients 10
+set steam_webApiKey "none"
+set resources_useSystemChat true
+
+## Add system admins
+add_ace group.admin command allow # allow all commands
+add_ace group.admin command.quit deny # but don't allow quit
+add_principal identifier.fivem:123example123 group.admin # Your.Name
+add_principal identifier.discord:123456example123456 group.admin #Your.Name
+
+# Disables Npc's
+set onesync_population false
+set onesync_distanceCullVehicles true
+
+# Resources
+ensure [essentials]
+ensure [standalone]
