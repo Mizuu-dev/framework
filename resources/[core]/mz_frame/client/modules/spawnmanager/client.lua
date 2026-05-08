@@ -107,7 +107,8 @@ function addSpawnPoint(spawn)
 
     -- is the model actually a model?
     if not IsModelInCdimage(model) then
-        error("invalid spawn model")
+        Citizen.Trace('^3[spawnmanager] WARNING: IsModelInCdimage returned false for model ' .. tostring(model) .. ', skipping validation\n')
+        -- Don't error — IsModelInCdimage can return false on early client load even for valid models
     end
 
     -- is is even a ped?
@@ -158,9 +159,7 @@ local function freezePlayer(id, freeze)
     local ped = GetPlayerPed(player)
 
     if not freeze then
-        if not IsEntityVisible(ped) then
-            SetEntityVisible(ped, true)
-        end
+        SetEntityVisible(ped, true)
 
         if not IsPedInAnyVehicle(ped) then
             SetEntityCollision(ped, true)
@@ -170,9 +169,7 @@ local function freezePlayer(id, freeze)
         --SetCharNeverTargetted(ped, false)
         SetPlayerInvincible(player, false)
     else
-        if IsEntityVisible(ped) then
-            SetEntityVisible(ped, false)
-        end
+        SetEntityVisible(ped, false)
 
         SetEntityCollision(ped, false)
         FreezeEntityPosition(ped, true)
@@ -233,14 +230,6 @@ function spawnPlayer(spawnIdx, cb)
             spawn = spawnPoints[spawnIdx]
         end
 
-        if not spawn.skipFade then
-            DoScreenFadeOut(500)
-
-            while not IsScreenFadedOut() do
-                Citizen.Wait(0)
-            end
-        end
-
         -- validate the index
         if not spawn then
             Citizen.Trace("tried to spawn at an invalid spawn index\n")
@@ -248,6 +237,14 @@ function spawnPlayer(spawnIdx, cb)
             spawnLock = false
 
             return
+        end
+
+        if not spawn.skipFade then
+            DoScreenFadeOut(500)
+
+            while not IsScreenFadedOut() do
+                Citizen.Wait(0)
+            end
         end
 
         -- freeze the local player
@@ -266,6 +263,9 @@ function spawnPlayer(spawnIdx, cb)
 
             -- change the player model
             SetPlayerModel(PlayerId(), spawn.model)
+
+            -- apply default component variation (required for freemode peds, otherwise they appear invisible/naked)
+            SetPedDefaultComponentVariation(PlayerPedId())
 
             -- release the player model
             SetModelAsNoLongerNeeded(spawn.model)

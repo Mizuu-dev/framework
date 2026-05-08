@@ -104,9 +104,11 @@ local currentMap = nil
 AddEventHandler('onResourceStart', function(resource)
     if maps[resource] then
         if not getCurrentGameType() then
-            for gt, _ in pairs(maps[resource].gameTypes) do
-                changeGameType(gt)
-                break
+            if maps[resource].gameTypes then
+                for gt, _ in pairs(maps[resource].gameTypes) do
+                    changeGameType(gt)
+                    break
+                end
             end
         end
 
