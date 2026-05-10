@@ -1,18 +1,6 @@
 AddEventHandler('onClientResourceStart', function(resourceName)
     if resourceName ~= GetCurrentResourceName() then return end
 
-    local ok, err = pcall(addSpawnPoint, {
-        x = 0.0,
-        y = 0.0,
-        z = 72.0,
-        heading = 0.0,
-        model = 'mp_m_freemode_01',
-    })
-
-    if not ok then
-        Citizen.Trace('^1[gamemode] addSpawnPoint failed: ' .. tostring(err) .. '\n')
-    end
-
     setAutoSpawn(false)
 
     Citizen.CreateThread(function()
@@ -20,7 +8,18 @@ AddEventHandler('onClientResourceStart', function(resourceName)
             Citizen.Wait(100)
         end
 
-        spawnPlayer()
+        MZ.TriggerCallback('mz_frame:getPlayerData', function(data)
+            local x, y, z = 0.0, 0.0, 72.0
+
+            if data and data.last_location then
+                local loc = json.decode(data.last_location)
+                if loc and loc.x then
+                    x, y, z = loc.x, loc.y, loc.z
+                end
+            end
+
+            spawnPlayer({ x = x, y = y, z = z, heading = 0.0, model = 'mp_m_freemode_01' })
+        end)
     end)
 end)
 

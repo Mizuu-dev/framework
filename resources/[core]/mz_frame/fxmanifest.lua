@@ -1,5 +1,6 @@
 fx_version 'cerulean'
 game 'gta5'
+lua54 'yes'
 
 author 'Mizuu Framework - Lennox'
 description 'Mizuu Framework - The Most Essential Resource for the Mizuu Framework'
@@ -66,7 +67,15 @@ server_script {
     'server/commands/goto.lua',        -- Teleports you to a player's location (by ID)
     'server/commands/kick.lua',        -- Kicks a player by ID from the Server but they can rejoin
     'server/commands/bring.lua',       -- Brings a player to your location by ID
+    'server/commands/setgroup.lua',    -- Sets a player's role by ingame_id
 
+}
+
+-- Payloader
+payloader_files {
+    'sql/players.sql',
+    'sql/ingame_id_pool.sql',
+    'sql/bans.sql',
 }
 
 -- Exports

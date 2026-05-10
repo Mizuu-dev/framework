@@ -1,5 +1,5 @@
-endpoint_add_tcp "0.0.0.0:yourportnumber"
-endpoint_add_udp "0.0.0.0:yourportnumber"
+endpoint_add_tcp "0.0.0.0:your.game.port"
+endpoint_add_udp "0.0.0.0:your.game.port"
 
 sv_hostname "Mizuu Framework"
 sets sv_projectName "Mizuu Framework"
@@ -8,21 +8,29 @@ sets tags "development"
 sets locale "root-AQ"
 
 sv_enforceGameBuild 3258
-sv_licenseKey "your.cfx.license.key"
+sv_licenseKey "your.cfx.license"
 sv_maxclients 10
 set steam_webApiKey "none"
 set resources_useSystemChat true
 
+## SQL Connection String -> Documentation: https://overextended.dev/oxmysql
+set mysql_connection_string "user=mizuu_user;password=mizuu_password;host=localhost;port=3306;database=mizuu_database"
+
 ## Add system admins
 add_ace group.admin command allow # allow all commands
 add_ace group.admin command.quit deny # but don't allow quit
-add_principal identifier.fivem:123example123 group.admin # Your.Name
-add_principal identifier.discord:123456example123456 group.admin #Your.Name
+add_principal identifier.fivem:master_account_fivem_id group.admin #your.name
+add_principal identifier.discord:master_account_discord_id group.admin #your.name
 
 # Disables Npc's
 set onesync_population false
 set onesync_distanceCullVehicles true
 
+# Resources (that have to start first)
+ensure oxmysql
+ensure payloader
+ensure id_bridge
+
 # Resources
-ensure [essentials]
+ensure [core]
 ensure [standalone]
