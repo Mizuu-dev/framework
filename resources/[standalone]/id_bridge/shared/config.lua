@@ -1,8 +1,8 @@
 Config = {}
 
-Config.PrefixFormat = '[#%04d] ' -- not needed
+Config.PrefixFormat = '[#%04d] '
 
-Config.DebugLog = true
+Config.DebugLog = false
 
 Config.CreateMissingPlayers = true
 Config.InsertRetries = 3

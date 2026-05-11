@@ -61,6 +61,7 @@ local function createMissingPlayer(source, license, attemptsLeft, done)
     end)
 end
 
+-- Full resolve: cache -> DB fetch -> optional insert -> applyId.
 function Identity.resolve(source, license, done)
     done = done or function() end
 
